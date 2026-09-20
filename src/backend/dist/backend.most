@@ -1,0 +1,256 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DateText__419143575 = DateText__762537557;
+type DateText__762537557 = Text;
+type DepositId__127989691 = Nat;
+type DepositId__818352677 = DepositId__127989691;
+type Deposit__182214128 =
+  {
+    amount : Nat;
+    createdAt : Int;
+    date : Text;
+    goalId : Nat;
+    id : Nat;
+    note : ?Text
+  };
+type Deposit__38664335 =
+  {
+    amount : Nat;
+    createdAt : Int;
+    date : Text;
+    goalId : Nat;
+    id : Nat;
+    note : ?Text
+  };
+type Deposit__768549982 =
+  {
+    amount : Nat;
+    createdAt : Int;
+    date : Text;
+    goalId : Nat;
+    id : Nat;
+    note : ?Text
+  };
+type Deposit__832152089 =
+  {
+    amount : Rupiah__1008492092;
+    createdAt : Timestamp__356317748;
+    date : DateText__419143575;
+    goalId : GoalId__880444240;
+    id : DepositId__818352677;
+    note : ?Text
+  };
+type ExternalBlob__220559234 = Blob;
+type GoalId__1036611184 = Nat;
+type GoalId__880444240 = GoalId__1036611184;
+type Goal__240328578 =
+  {
+    createdAt : Int;
+    id : Nat;
+    name : Text;
+    photoUrl : Text;
+    startDate : Text;
+    targetAmount : Nat;
+    targetDate : Text
+  };
+type Goal__423401502 =
+  {
+    createdAt : Timestamp__356317748;
+    id : GoalId__880444240;
+    name : Text;
+    photoUrl : Text;
+    startDate : DateText__419143575;
+    targetAmount : Rupiah__1008492092;
+    targetDate : DateText__419143575
+  };
+type Goal__798682879 =
+  {
+    createdAt : Int;
+    id : Nat;
+    name : Text;
+    photoUrl : Text;
+    startDate : Text;
+    targetAmount : Nat;
+    targetDate : Text
+  };
+type Goal__900677743 =
+  {
+    createdAt : Int;
+    id : Nat;
+    name : Text;
+    photoUrl : Text;
+    startDate : Text;
+    targetAmount : Nat;
+    targetDate : Text
+  };
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type List__355132335<T> =
+  {
+    var blockIndex : Nat__227979830;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__227979830
+  };
+type List__836382695<T> = List__355132335<T>;
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type MusicState__807552127 = {var nextTrackId : Nat};
+type MusicState__821833465 = {var nextTrackId : Nat};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__214095698 =
+  {
+    accessControlState : AccessControlState__201339279;
+    deposits : List__836382695<Deposit__38664335>;
+    goals : Map__230067015<Nat, Goal__798682879>;
+    musicState : MusicState__821833465;
+    reminderState : ReminderState__750055541;
+    savingsState : SavingsState__29656333;
+    tracks : Map__230067015<Nat, Track__714436095>
+  };
+type NewActor__288609765 =
+  {
+    accessControlState : AccessControlState__201339279;
+    deposits : List__836382695<Deposit__182214128>;
+    goals : Map__230067015<Nat, Goal__240328578>;
+    musicState : MusicState__807552127;
+    savingsState : SavingsState__108357525;
+    tracks : Map__230067015<Nat, Track__502539299>
+  };
+type NewActor__868806984 =
+  {
+    accessControlState : AccessControlState__201339279;
+    deposits : List__836382695<Deposit__768549982>;
+    goals : Map__230067015<Nat, Goal__900677743>;
+    savingsState : SavingsState__966791500
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__477617168 =
+  {
+    accessControlState : AccessControlState__201339279;
+    deposits : List__836382695<Deposit__182214128>;
+    goals : Map__230067015<Nat, Goal__240328578>;
+    savingsState : SavingsState__108357525
+  };
+type OldActor__507170124 =
+  {
+    accessControlState : AccessControlState__201339279;
+    deposits : List__836382695<Deposit__38664335>;
+    goals : Map__230067015<Nat, Goal__798682879>;
+    musicState : MusicState__821833465;
+    savingsState : SavingsState__29656333;
+    tracks : Map__230067015<Nat, Track__714436095>
+  };
+type OldActor__836494563 = {};
+type ReminderState__750055541 =
+  {
+    var accountSid : Text;
+    var apiKeySecret : Text;
+    var apiKeySid : Text;
+    var enabled : Bool;
+    var lastSendMessage : Text;
+    var lastSendSuccess : Bool;
+    var lastSendTimestamp : Int;
+    var phoneNumber : Text;
+    var senderNumber : Text
+  };
+type Rupiah__1008492092 = Rupiah__490350571;
+type Rupiah__490350571 = Nat;
+type SavingsState__108357525 =
+  {var nextDepositId : Nat; var nextGoalId : Nat};
+type SavingsState__29656333 = {var nextDepositId : Nat; var nextGoalId : Nat};
+type SavingsState__966791500 =
+  {var nextDepositId : Nat; var nextGoalId : Nat};
+type Timestamp__301639476 = Int;
+type Timestamp__356317748 = Timestamp__301639476;
+type Timestamp__966827533 = Timestamp__301639476;
+type TrackId__520195123 = TrackId__884067345;
+type TrackId__884067345 = Nat;
+type Track__502539299 =
+  {
+    artist : Text;
+    blob : ExternalBlob__220559234;
+    contentType : Text;
+    createdAt : Int;
+    durationSeconds : Nat;
+    id : Nat;
+    originalFilename : Text;
+    sizeBytes : Nat;
+    title : Text
+  };
+type Track__705116183 =
+  {
+    artist : Text;
+    blob : ExternalBlob__220559234;
+    contentType : Text;
+    createdAt : Timestamp__966827533;
+    durationSeconds : Nat;
+    id : TrackId__520195123;
+    originalFilename : Text;
+    sizeBytes : Nat;
+    title : Text
+  };
+type Track__714436095 =
+  {
+    artist : Text;
+    blob : ExternalBlob__220559234;
+    contentType : Text;
+    createdAt : Int;
+    durationSeconds : Nat;
+    id : Nat;
+    originalFilename : Text;
+    sizeBytes : Nat;
+    title : Text
+  };
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20260919_120000" : (_old : OldActor__836494563) -> NewActor__868806984;
+  "20260919_130000" : (old : OldActor__477617168) -> NewActor__288609765;
+  "20260919_140000" : (old : OldActor__507170124) -> NewActor__214095698
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable deposits :
+    {
+      var blockIndex : Nat__227979830;
+      var blocks : [var [var ?Deposit__832152089]];
+      var elementIndex : Nat__227979830
+    };
+  stable goals :
+    {
+      var root : Node__204828119<Nat, Goal__423401502>;
+      var size : Nat__227979830
+    };
+  stable musicState : {var nextTrackId : Nat};
+  stable reminderState :
+    {
+      var accountSid : Text;
+      var apiKeySecret : Text;
+      var apiKeySid : Text;
+      var enabled : Bool;
+      var lastSendMessage : Text;
+      var lastSendSuccess : Bool;
+      var lastSendTimestamp : Int;
+      var phoneNumber : Text;
+      var senderNumber : Text
+    };
+  stable savingsState : {var nextDepositId : Nat; var nextGoalId : Nat};
+  stable tracks :
+    {
+      var root : Node__204828119<Nat, Track__705116183>;
+      var size : Nat__227979830
+    }
+};

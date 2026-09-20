@@ -1,0 +1,21 @@
+{
+  "overview": "A savings-goal tracker with a built-in music player, now with admin-managed SMS deposit reminders.",
+  "features": [
+    "Track savings goals and deposits",
+    "Search and play public-domain music from the Internet Archive",
+    "Upload and play your own songs with a persistent mini-player",
+    "Sign in with Internet Identity",
+    "Admin page for the reminder phone number and Twilio credentials",
+    "Automatic daily SMS deposit reminder at 19:00 WIB",
+    "Send a reminder on demand and see the last delivery result"
+  ],
+  "category": "personal-finance",
+  "tags": [
+    "savings",
+    "music",
+    "reminders",
+    "sms",
+    "admin"
+  ],
+  "last_updated": "2026-09-19T22:31:58.098Z"
+}

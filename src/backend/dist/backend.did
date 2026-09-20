@@ -1,0 +1,284 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UpdateDepositInput = 
+ record {
+   amount: Rupiah;
+   date: DateText;
+   id: DepositId;
+   note: opt text;
+ };
+type TrendPoint = 
+ record {
+   count: nat;
+   period: text;
+   total: Rupiah;
+ };
+type TrendPeriod = 
+ variant {
+   daily;
+   monthly;
+ };
+type TrackView = 
+ record {
+   artist: text;
+   "blob": ExternalBlob;
+   contentType: text;
+   createdAt: Timestamp;
+   durationSeconds: nat;
+   id: TrackId;
+   originalFilename: text;
+   sizeBytes: nat;
+   title: text;
+ };
+type TrackId = nat;
+type Timestamp = int;
+type SendResult = 
+ record {
+   message: text;
+   success: bool;
+   timestamp: Timestamp;
+ };
+type SavingsError = 
+ variant {
+   depositNotFound: DepositId;
+   goalNotFound: GoalId;
+   invalidInput: text;
+ };
+type SaveReminderSettingsInput = 
+ record {
+   accountSid: text;
+   apiKeySecret: text;
+   apiKeySid: text;
+   enabled: bool;
+   phoneNumber: text;
+   senderNumber: text;
+ };
+type Rupiah = nat;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ReminderSettingsView = 
+ record {
+   accountSidMasked: text;
+   accountSidSet: bool;
+   apiKeySecretSet: bool;
+   apiKeySidMasked: text;
+   apiKeySidSet: bool;
+   enabled: bool;
+   phoneNumber: text;
+   senderNumber: text;
+ };
+type ReminderError = 
+ variant {
+   invalidCredentials: text;
+   invalidPhoneNumber: text;
+   invalidSenderNumber: text;
+   notConfigured;
+   sendFailed: text;
+ };
+type LastSendResult = 
+ record {
+   message: text;
+   success: bool;
+   timestamp: Timestamp;
+ };
+type GoalView = 
+ record {
+   createdAt: Timestamp;
+   id: GoalId;
+   name: text;
+   photoUrl: text;
+   startDate: DateText;
+   targetAmount: Rupiah;
+   targetDate: DateText;
+ };
+type GoalStats = 
+ record {
+   averageDeposit: float64;
+   depositCount: nat;
+   goalId: GoalId;
+   remaining: Rupiah;
+   totalDeposits: Rupiah;
+ };
+type GoalProgress = 
+ record {
+   daysRemaining: int;
+   depositCount: nat;
+   goalId: GoalId;
+   isOverdue: bool;
+   isReached: bool;
+   percentage: float64;
+   remaining: Rupiah;
+   totalDeposits: Rupiah;
+ };
+type GoalId = nat;
+type ExternalBlob = blob;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DepositView = 
+ record {
+   amount: Rupiah;
+   createdAt: Timestamp;
+   date: DateText;
+   goalId: GoalId;
+   id: DepositId;
+   note: opt text;
+ };
+type DepositId = nat;
+type DateText = text;
+type CreateTrackInput = 
+ record {
+   artist: text;
+   "blob": ExternalBlob;
+   contentType: text;
+   durationSeconds: nat;
+   originalFilename: text;
+   sizeBytes: nat;
+   title: text;
+ };
+type CreateGoalInput = 
+ record {
+   name: text;
+   photoUrl: text;
+   startDate: DateText;
+   targetAmount: Rupiah;
+   targetDate: DateText;
+ };
+type CreateDepositInput = 
+ record {
+   amount: Rupiah;
+   date: DateText;
+   goalId: GoalId;
+   note: opt text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  /// Add a deposit to one of the caller's savings goals.
+  addDeposit: (input: CreateDepositInput) ->
+   (variant {
+      err: SavingsError;
+      ok: DepositView;
+    });
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Create a new savings goal for the caller.
+  createGoal: (input: CreateGoalInput) -> (GoalView);
+  /// Register an uploaded audio track in the shared library.
+  createTrack: (input: CreateTrackInput) -> (TrackView);
+  /// Delete an existing deposit owned by the caller.
+  deleteDeposit: (id: nat) -> (bool);
+  /// Delete a savings goal and all of its deposits.
+  deleteGoal: (id: nat) -> (bool);
+  /// Delete an uploaded audio track.
+  deleteTrack: (id: nat) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  /// Static Markdown documentation of the backend's public API.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Fetch a single savings goal owned by the caller.
+  getGoal: (id: nat) -> (opt GoalView) query;
+  /// Read the last reminder send result (admin only).
+  getLastReminderSend: () -> (opt LastSendResult) query;
+  /// Compute progress for one of the caller's savings goals.
+  getProgress: (goalId: nat, today: DateText) -> (opt GoalProgress) query;
+  /// Read the current reminder settings (admin only). Secrets are masked.
+  getReminderSettings: () -> (ReminderSettingsView) query;
+  /// Compute aggregate statistics for one of the caller's savings goals.
+  getStats: (goalId: nat) -> (opt GoalStats) query;
+  /// Fetch a single uploaded audio track.
+  getTrack: (id: nat) -> (opt TrackView) query;
+  /// Compute the deposit trend for one of the caller's savings goals.
+  getTrend: (goalId: nat, period: TrendPeriod) -> (vec TrendPoint) query;
+  isCallerAdmin: () -> (bool) query;
+  /// Whether the reminder is fully configured (admin only).
+  isReminderConfigured: () -> (bool) query;
+  /// List the deposits of one of the caller's savings goals, newest first.
+  listDeposits: (goalId: nat) -> (vec DepositView) query;
+  /// List every savings goal owned by the caller.
+  listGoals: () -> (vec GoalView) query;
+  /// List every uploaded audio track, newest first.
+  listTracks: () -> (vec TrackView) query;
+  /// Save the reminder settings (admin only).
+  saveReminderSettings: (input: SaveReminderSettingsInput) ->
+   (variant {
+      err: ReminderError;
+      ok: ReminderSettingsView;
+    });
+  schema: () -> (text) query;
+  /// Send the daily reminder SMS immediately (admin only).
+  sendReminderNow: () -> (SendResult);
+  /// Update an existing deposit owned by the caller.
+  updateDeposit: (input: UpdateDepositInput) ->
+   (variant {
+      err: SavingsError;
+      ok: DepositView;
+    });
+}

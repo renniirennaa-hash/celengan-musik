@@ -1,0 +1,548 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "DM Sans";
+    --font-mono: "Geist Mono";
+    --radius: 1rem;
+
+    /* Light mode — warm parchment ledger (secondary; app defaults to dark) */
+    --background: 0.97 0.008 75;
+    --foreground: 0.2 0.018 55;
+    --card: 0.99 0.006 75;
+    --card-foreground: 0.2 0.018 55;
+    --popover: 0.99 0.006 75;
+    --popover-foreground: 0.2 0.018 55;
+
+    --primary: 0.55 0.14 168;
+    --primary-foreground: 0.99 0.005 168;
+
+    --secondary: 0.93 0.012 75;
+    --secondary-foreground: 0.28 0.02 55;
+    --muted: 0.93 0.012 75;
+    --muted-foreground: 0.48 0.014 55;
+
+    --accent: 0.66 0.14 62;
+    --accent-foreground: 0.18 0.02 62;
+
+    --destructive: 0.55 0.2 27;
+    --destructive-foreground: 0.98 0.005 27;
+    --success: 0.58 0.15 160;
+    --success-foreground: 0.99 0.005 160;
+    --warning: 0.7 0.15 78;
+    --warning-foreground: 0.18 0.02 78;
+
+    --border: 0.89 0.012 70;
+    --input: 0.89 0.012 70;
+    --ring: 0.55 0.14 168;
+
+    --chart-1: 0.62 0.16 165;
+    --chart-2: 0.7 0.15 62;
+    --chart-3: 0.5 0.1 210;
+    --chart-4: 0.68 0.17 25;
+    --chart-5: 0.6 0.12 300;
+
+    --sidebar: 0.95 0.01 75;
+    --sidebar-foreground: 0.2 0.018 55;
+    --sidebar-primary: 0.55 0.14 168;
+    --sidebar-primary-foreground: 0.99 0.005 168;
+    --sidebar-accent: 0.91 0.014 75;
+    --sidebar-accent-foreground: 0.28 0.02 55;
+    --sidebar-border: 0.88 0.014 70;
+    --sidebar-ring: 0.55 0.14 168;
+
+    /* Scrim + glass tokens for arbitrary user-uploaded backgrounds */
+    --scrim: 0.16 0.016 55;
+    --scrim-opacity: 0.72;
+    --scrim-strong-opacity: 0.86;
+    --glass: 0.21 0.018 55;
+    --glass-opacity: 0.62;
+    --glass-border: 0.95 0.01 70;
+    --glass-border-opacity: 0.1;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.78 0.17 165) 0%,
+      oklch(0.72 0.15 178) 100%
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.22 0.02 55) 0%,
+      oklch(0.17 0.016 55) 100%
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ── Music surfaces (light fallback) ─────────────────────────── */
+    /* Mini-player dock: floats above bottom nav / at desktop viewport base */
+    --player: 0.22 0.02 55;
+    --player-opacity: 0.92;
+    --player-border: 0.95 0.01 70;
+    --player-border-opacity: 0.12;
+    /* Track row hover + active/playing state */
+    --track-hover: 0.94 0.014 75;
+    --track-active: 0.93 0.05 165;
+    --track-active-foreground: 0.3 0.09 165;
+    /* Seek bar: played fill vs upcoming track */
+    --seek-track: 0.88 0.012 70;
+    --seek-fill: 0.62 0.15 165;
+    /* Dropzone */
+    --dropzone: 0.95 0.01 75;
+    --dropzone-border: 0.78 0.02 70;
+    --dropzone-active: 0.93 0.05 165;
+
+    /* ── Settings / form surfaces (light fallback) ───────────────── */
+    /* Labeled input: resting fill + border, focus ring, invalid border */
+    --field: 0.97 0.008 75;
+    --field-border: 0.86 0.014 70;
+    --field-focus: 0.55 0.14 168;
+    --field-invalid: 0.55 0.2 27;
+    /* Inline validation + helper copy */
+    --helper: 0.5 0.014 55;
+    --error-text: 0.5 0.19 27;
+    /* Disabled control treatment (button/input) */
+    --disabled: 0.92 0.01 75;
+    --disabled-foreground: 0.62 0.012 70;
+    --disabled-border: 0.87 0.012 70;
+    /* Status badge: configured (jade) / not configured (amber) */
+    --badge-configured: 0.93 0.05 165;
+    --badge-configured-foreground: 0.36 0.1 165;
+    --badge-unconfigured: 0.94 0.05 78;
+    --badge-unconfigured-foreground: 0.42 0.1 68;
+    /* Last-sent result row: success / failure */
+    --result-success: 0.94 0.045 165;
+    --result-success-foreground: 0.34 0.1 165;
+    --result-failure: 0.94 0.04 27;
+    --result-failure-foreground: 0.44 0.15 27;
+
+    /* Layout offsets so content clears the mini-player + nav */
+    --player-height: 4.5rem;
+    --bottom-nav-height: 4.25rem;
+  }
+
+  .dark {
+    /* Night Ledger — deep warm espresso charcoal */
+    --background: 0.16 0.015 55;
+    --foreground: 0.94 0.008 75;
+    --card: 0.21 0.018 55;
+    --card-foreground: 0.94 0.008 75;
+    --popover: 0.24 0.02 55;
+    --popover-foreground: 0.94 0.008 75;
+
+    /* Luminous mint-jade */
+    --primary: 0.78 0.17 165;
+    --primary-foreground: 0.16 0.02 165;
+
+    --secondary: 0.26 0.02 55;
+    --secondary-foreground: 0.88 0.01 75;
+    --muted: 0.26 0.02 55;
+    --muted-foreground: 0.62 0.014 70;
+
+    /* Warm amber accent */
+    --accent: 0.78 0.14 68;
+    --accent-foreground: 0.17 0.02 68;
+
+    --destructive: 0.66 0.19 27;
+    --destructive-foreground: 0.15 0.02 27;
+    --success: 0.78 0.17 165;
+    --success-foreground: 0.16 0.02 165;
+    --warning: 0.78 0.14 68;
+    --warning-foreground: 0.17 0.02 68;
+
+    --border: 0.3 0.02 55;
+    --input: 0.3 0.02 55;
+    --ring: 0.78 0.17 165;
+
+    --chart-1: 0.78 0.17 165;
+    --chart-2: 0.78 0.14 68;
+    --chart-3: 0.68 0.11 215;
+    --chart-4: 0.7 0.17 25;
+    --chart-5: 0.68 0.13 300;
+
+    --sidebar: 0.19 0.017 55;
+    --sidebar-foreground: 0.94 0.008 75;
+    --sidebar-primary: 0.78 0.17 165;
+    --sidebar-primary-foreground: 0.16 0.02 165;
+    --sidebar-accent: 0.26 0.02 55;
+    --sidebar-accent-foreground: 0.9 0.01 75;
+    --sidebar-border: 0.28 0.02 55;
+    --sidebar-ring: 0.78 0.17 165;
+
+    --scrim: 0.13 0.014 55;
+    --scrim-opacity: 0.74;
+    --scrim-strong-opacity: 0.88;
+    --glass: 0.2 0.018 55;
+    --glass-opacity: 0.6;
+    --glass-border: 0.95 0.01 70;
+    --glass-border-opacity: 0.1;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.78 0.17 165) 0%,
+      oklch(0.72 0.15 178) 100%
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.24 0.02 55) 0%,
+      oklch(0.18 0.016 55) 100%
+    );
+
+    /* ── Music surfaces (Night Ledger dark) ──────────────────────── */
+    /* Mini-player dock: floats above bottom nav / at desktop viewport base */
+    --player: 0.22 0.02 55;
+    --player-opacity: 0.92;
+    --player-border: 0.95 0.01 70;
+    --player-border-opacity: 0.12;
+    /* Track row hover + active/playing state */
+    --track-hover: 0.27 0.022 55;
+    --track-active: 0.31 0.06 165;
+    --track-active-foreground: 0.9 0.15 165;
+    /* Seek bar: played fill vs upcoming track */
+    --seek-track: 0.34 0.022 55;
+    --seek-fill: 0.78 0.17 165;
+    /* Dropzone */
+    --dropzone: 0.2 0.018 55;
+    --dropzone-border: 0.4 0.03 62;
+    --dropzone-active: 0.3 0.06 165;
+
+    /* ── Settings / form surfaces (Night Ledger dark) ────────────── */
+    /* Labeled input: resting fill + border, focus ring, invalid border */
+    --field: 0.19 0.017 55;
+    --field-border: 0.32 0.022 55;
+    --field-focus: 0.78 0.17 165;
+    --field-invalid: 0.66 0.19 27;
+    /* Inline validation + helper copy */
+    --helper: 0.62 0.014 70;
+    --error-text: 0.74 0.16 27;
+    /* Disabled control treatment (button/input) */
+    --disabled: 0.24 0.018 55;
+    --disabled-foreground: 0.5 0.012 70;
+    --disabled-border: 0.28 0.02 55;
+    /* Status badge: configured (jade) / not configured (amber) */
+    --badge-configured: 0.32 0.07 165;
+    --badge-configured-foreground: 0.85 0.14 165;
+    --badge-unconfigured: 0.33 0.06 68;
+    --badge-unconfigured-foreground: 0.86 0.12 72;
+    /* Last-sent result row: success / failure */
+    --result-success: 0.3 0.06 165;
+    --result-success-foreground: 0.85 0.14 165;
+    --result-failure: 0.3 0.06 27;
+    --result-failure-foreground: 0.82 0.13 27;
+
+    /* Layout offsets so content clears the mini-player + nav */
+    --player-height: 4.5rem;
+    --bottom-nav-height: 4.25rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  /* Currency / metric figures — tabular monospace numerals */
+  .font-figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Section label: small uppercase letterspaced */
+  .label-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground;
+  }
+
+  /* Full-app background layer: user image + readable scrim */
+  .app-shell-bg {
+    background-color: oklch(var(--background));
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /* Scrim overlay applied over arbitrary uploaded background images */
+  .bg-scrim {
+    background-color: oklch(var(--scrim) / var(--scrim-opacity));
+  }
+
+  .bg-scrim-strong {
+    background-color: oklch(var(--scrim) / var(--scrim-strong-opacity));
+  }
+
+  /* Glass surface — readable over any background image */
+  .surface-glass {
+    background-color: oklch(var(--glass) / var(--glass-opacity));
+    border: 1px solid oklch(var(--glass-border) / var(--glass-border-opacity));
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  .surface-card {
+    background-color: oklch(var(--card));
+    border: 1px solid oklch(var(--border));
+  }
+
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Ledger glow — signature detail on progress fill */
+  .glow-primary {
+    box-shadow: 0 0 0 1px oklch(var(--primary) / 0.35), 0 0 18px -2px
+      oklch(var(--primary) / 0.45);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 0 1px oklch(var(--accent) / 0.3), 0 0 16px -4px
+      oklch(var(--accent) / 0.4);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Music surfaces ──────────────────────────────────────────── */
+
+  /* Mini-player dock — glass over any uploaded background, tuned denser
+     than .surface-glass so the transport controls stay legible. */
+  .surface-player {
+    background-color: oklch(var(--player) / var(--player-opacity));
+    border: 1px solid oklch(var(--player-border) / var(--player-border-opacity));
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+  }
+
+  /* Track list row — resting / hover / active(playing) */
+  .track-row {
+    background-color: transparent;
+    transition: var(--transition-smooth);
+  }
+  .track-row:hover {
+    background-color: oklch(var(--track-hover));
+  }
+  .track-row-active {
+    background-color: oklch(var(--track-active));
+    color: oklch(var(--track-active-foreground));
+  }
+
+  /* Seek bar — a slim jade rail; the fill carries the Ledger Glow */
+  .seek-rail {
+    background-color: oklch(var(--seek-track));
+  }
+  .seek-fill {
+    background-color: oklch(var(--seek-fill));
+    box-shadow: 0 0 12px -2px oklch(var(--seek-fill) / 0.55);
+  }
+
+  /* Waveform ledger — signature seek treatment: vertical jade bars.
+     Bars are sized inline by the player; these set the shared look. */
+  .waveform-bar {
+    background-color: oklch(var(--seek-track));
+    border-radius: 9999px;
+    transition: background-color 0.2s ease-out;
+  }
+  .waveform-bar-played {
+    background-color: oklch(var(--seek-fill));
+  }
+
+  /* Upload dropzone */
+  .dropzone {
+    background-color: oklch(var(--dropzone));
+    border: 1px dashed oklch(var(--dropzone-border));
+    transition: var(--transition-smooth);
+  }
+  .dropzone-active {
+    background-color: oklch(var(--dropzone-active));
+    border-color: oklch(var(--primary));
+  }
+
+  /* Reserve space so page content never hides behind the docked player
+     and the mobile bottom nav. */
+  .pb-player-dock {
+    padding-bottom: calc(
+      var(--player-height) +
+      var(--bottom-nav-height) +
+      1.5rem
+    );
+  }
+  @media (min-width: 768px) {
+    .pb-player-dock {
+      padding-bottom: calc(var(--player-height) + 1.5rem);
+    }
+  }
+
+  /* ── Settings / form surfaces ────────────────────────────────── */
+
+  /* Form field label: small, quiet, sits above the input */
+  .field-label {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  /* Labeled text input — resting fill, warm border, jade focus ring.
+     Invalid state swaps the border + ring to destructive. */
+  .field-input {
+    background-color: oklch(var(--field));
+    border: 1px solid oklch(var(--field-border));
+    border-radius: calc(var(--radius) - 2px);
+    color: oklch(var(--foreground));
+    transition: var(--transition-smooth);
+  }
+  .field-input::placeholder {
+    color: oklch(var(--helper));
+  }
+  .field-input:focus-visible {
+    outline: none;
+    border-color: oklch(var(--field-focus));
+    box-shadow: 0 0 0 3px oklch(var(--field-focus) / 0.28);
+  }
+  .field-input[aria-invalid="true"] {
+    border-color: oklch(var(--field-invalid));
+  }
+  .field-input[aria-invalid="true"]:focus-visible {
+    box-shadow: 0 0 0 3px oklch(var(--field-invalid) / 0.28);
+  }
+  .field-input:disabled {
+    background-color: oklch(var(--disabled));
+    color: oklch(var(--disabled-foreground));
+    border-color: oklch(var(--disabled-border));
+    cursor: not-allowed;
+  }
+
+  /* Helper copy under a field */
+  .field-helper {
+    color: oklch(var(--helper));
+  }
+
+  /* Inline validation error text under a field */
+  .field-error {
+    color: oklch(var(--error-text));
+  }
+
+  /* Disabled button treatment — flat, no glow, muted label */
+  .btn-disabled {
+    background-color: oklch(var(--disabled));
+    color: oklch(var(--disabled-foreground));
+    border: 1px solid oklch(var(--disabled-border));
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  /* Status badge — full-pill; 'configured' jade, 'not configured' amber */
+  .badge-status {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .badge-configured {
+    background-color: oklch(var(--badge-configured));
+    color: oklch(var(--badge-configured-foreground));
+  }
+  .badge-unconfigured {
+    background-color: oklch(var(--badge-unconfigured));
+    color: oklch(var(--badge-unconfigured-foreground));
+  }
+
+  /* Last-sent result row — success / failure variants */
+  .result-row {
+    @apply flex items-center gap-3 rounded-2xl px-4 py-3 text-sm;
+  }
+  .result-success {
+    background-color: oklch(var(--result-success));
+    color: oklch(var(--result-success-foreground));
+  }
+  .result-failure {
+    background-color: oklch(var(--result-failure));
+    color: oklch(var(--result-failure-foreground));
+  }
+
+  /* Sign-in affordance: compact glass header button + identity chip.
+     Both inherit the top bar's glass treatment so they read as one bar. */
+  .signin-button {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium;
+    background-color: oklch(var(--glass) / var(--glass-opacity));
+    border: 1px solid oklch(var(--glass-border) / var(--glass-border-opacity));
+    color: oklch(var(--foreground));
+    transition: var(--transition-smooth);
+  }
+  .signin-button:hover {
+    border-color: oklch(var(--primary) / 0.5);
+    color: oklch(var(--primary));
+  }
+
+  .identity-chip {
+    @apply inline-flex items-center gap-2 rounded-full py-1 pl-1 pr-3 text-sm;
+    background-color: oklch(var(--glass) / var(--glass-opacity));
+    border: 1px solid oklch(var(--glass-border) / var(--glass-border-opacity));
+    color: oklch(var(--foreground));
+    transition: var(--transition-smooth);
+  }
+  .identity-chip:hover {
+    border-color: oklch(var(--primary) / 0.5);
+  }
+  /* Principal avatar — jade gradient disc with mono initial */
+  .identity-avatar {
+    @apply flex h-6 w-6 items-center justify-center rounded-full font-mono text-[10px] font-bold uppercase;
+    background: var(--gradient-primary);
+    color: oklch(var(--primary-foreground));
+  }
+}
+
+/* Respect the user's motion preference: collapse custom transitions and
+   animations to near-instant instead of animating them. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .transition-smooth {
+    transition: none !important;
+  }
+}
